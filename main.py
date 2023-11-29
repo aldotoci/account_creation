@@ -55,6 +55,6 @@ girlsToGetInfo = convertFileLinesIntoArray('./data/ComigIGCreation/females')
 config = db.config.find_one({"name": "completeIGProfile"})
 gender = 'rapper'
 usernamesToStartIndex = config["fastRappersToGetInfoStartI"]
-shallow_ig_acc_data = mockUsernames[config["mockIgAccToStartI"]]
+shallow_ig_acc_data = mockUsernames[config["mockIgAccToStartI"]:]
 print('shallow_ig_acc_data', shallow_ig_acc_data)
 # main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex], gender, db.newlyCreatingAcc)
