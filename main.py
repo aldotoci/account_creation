@@ -1,3 +1,5 @@
+import time
+
 from data.shallowIGAccs import mockUsernames
 from utils_acc_c import isAccUsable, downloadDataForNewIg, replaceNewInfoInIG,\
     generateSimilarIGUsername
@@ -40,6 +42,8 @@ def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tab
                                  "originalUsername": username_to_profile_info, "mockUsername": bot.username,
                                  "password": bot.password, "cookies": cookies, "gender": gender, "usedQuantity": 0,
                                  "currentDate": 0})
+
+        time.sleep(5)
 
         ig_bot.reset_ip()
 
