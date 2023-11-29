@@ -49,7 +49,7 @@ def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tab
                                  "originalUsername": username_to_profile_info, "mockUsername": bot.username,
                                  "password": bot.password, "cookies": cookies, "gender": gender, "usedQuantity": 0,
                                  "currentDate": 0})
-        db.config.find_one_and_update({"name": "completeIGProfile"}, {'$inc': {"mockIgAccToStartI": 1}})
+        # db.config.find_one_and_update({"name": "completeIGProfile"}, {'$inc': {"mockIgAccToStartI": 1}})
 
         time.sleep(5)
 
