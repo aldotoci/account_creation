@@ -82,11 +82,11 @@ class Bot:
         actions.send_keys(text)  # Simulate Ctrl+T command
         actions.perform()
 
-    def waitForElementWithText(self, text, element='*', parent_element: WebElement = None) -> WebElement:
+    def waitForElementWithText(self, text, element='*', parent_element: WebElement = None, time=10) -> WebElement:
         if (parent_element == None):
             parent_element = self.driver
 
-        return self.waitForElementXPATH(f'//{element}[text()="{text}"]', time=10, parent_element=parent_element)
+        return self.waitForElementXPATH(f'//{element}[text()="{text}"]', time=time, parent_element=parent_element)
 
     def login(self):
         """
@@ -221,7 +221,7 @@ class Bot:
     def notNowNotifications(self, time=2):
         try:
             # notNowNotification = self.waitForElementXPATH("//button[contains(text(), 'Not Now')]", time=time)
-            notNowNotification = self.waitForClass("_a9_1", time=time)
+            notNowNotification = self.waitForElementWithText("Not now", time=time)
             # _a9_1
             notNowNotification.click()
             time.sleep(2)
