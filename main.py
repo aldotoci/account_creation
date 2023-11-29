@@ -3,6 +3,9 @@ from utils_acc_c import isAccUsable, downloadDataForNewIg, replaceNewInfoInIG,\
     generateSimilarIGUsername
 from utils import convertFileLinesIntoArray
 from config import db
+from ANDROID_IG_AC_BOT import IG_Bot
+
+ig_bot = IG_Bot
 
 def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tableToStore: str):
     for i, user in enumerate(shallow_ig_acc_data):
@@ -37,6 +40,8 @@ def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tab
                                  "originalUsername": username_to_profile_info, "mockUsername": bot.username,
                                  "password": bot.password, "cookies": cookies, "gender": gender, "usedQuantity": 0,
                                  "currentDate": 0})
+
+        ig_bot.reset_ip()
 
 rappersToGetInfo = convertFileLinesIntoArray('./data/ComigIGCreation/rappers')
 boysToGetInfo = convertFileLinesIntoArray('./data/ComigIGCreation/males')
