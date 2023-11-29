@@ -22,7 +22,7 @@ def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tab
         username, password = user['username'], user['password']
 
         bot = isAccUsable(username, password)
-        if bot == False: return False
+        if bot == False: continue
 
         username_to_profile_info = real_usernames[i]
         username_to_get_images = real_usernames[i+1]
