@@ -223,7 +223,7 @@ class Bot:
     def notNowNotifications(self, time=2):
         try:
             # notNowNotification = self.waitForElementXPATH("//button[contains(text(), 'Not Now')]", time=time)
-            notNowNotification = self.waitForElementWithText("Not now", time=time)
+            notNowNotification = self.waitForElementWithText("Not Now", time=time)
             # _a9_1
             notNowNotification.click()
             time.sleep(2)
