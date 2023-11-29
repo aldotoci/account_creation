@@ -13,6 +13,12 @@ ig_bot = IG_Bot()
 def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tableToStore: str):
     for i, user in enumerate(shallow_ig_acc_data):
         print('i', i)
+
+        try:
+            os.system('rm ./data/images/*')
+        except Exception as err:
+            print('err', err)
+
         username, password = user['username'], user['password']
 
         bot = isAccUsable(username, password)
@@ -43,6 +49,7 @@ def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tab
                                  "originalUsername": username_to_profile_info, "mockUsername": bot.username,
                                  "password": bot.password, "cookies": cookies, "gender": gender, "usedQuantity": 0,
                                  "currentDate": 0})
+        db.config.find_one_and_update({"name": "completeIGProfile"}, {'$inc': {"mockIgAccToStartI": 1}})
 
         time.sleep(5)
 
@@ -58,13 +65,13 @@ gender = 'rapper'
 usernamesToStartIndex = config["fastRappersToGetInfoStartI"]
 shallow_ig_acc_data = mockUsernames[config["mockIgAccToStartI"]:]
 
-# main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newlyCreatingAcc)
+main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newlyCreatingAcc)
 
-user = shallow_ig_acc_data[0]
-bot = Bot(username=user['username'], password=user['password'])
+# user = shallow_ig_acc_data[0]
+# bot = Bot(username=user['username'], password=user['password'])
+#
+# bot.open()
+# bot.login()
+# time.sleep(2)
 
-bot.open()
-bot.login()
-time.sleep(2)
-
-bot.completeProfile(imagesPaths=[f'{os.getcwd()}/data/images/profile0.png'])
+# bot.completeProfile(imagesPaths=[f'{os.getcwd()}/data/images/profile0.png'])

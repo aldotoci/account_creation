@@ -322,7 +322,7 @@ class Bot:
             print('USR DNE || Already Followed')
             return False
 
-    def uploadMedia(self, absolutePath: str,maxTimeToWait: int = 600):
+    def uploadMedia(self, absolutePath: str,maxTimeToWait: int = 30):
         self.driver.get("https://www.instagram.com/")
         # self.notNowNotifications(time=5)
         time.sleep(2)
