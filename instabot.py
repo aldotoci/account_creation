@@ -332,6 +332,14 @@ class Bot:
             createButton.click()
             time.sleep(3)
 
+            try:
+                # Click post button
+                createButton = self.waitForElementXPATH('//span[text()="Post"]', time=2)
+                createButton.click()
+                time.sleep(3)
+            except Exception as err:
+                print('err', err)
+
             # Input video path
             selectButton = self.waitForElementXPATH('//div[@class="x6s0dn4 x78zum5 x5yr21d xl56j7k x1n2onr6 xh8yej3"]').find_element(By.CLASS_NAME, "_ac69")
             selectButton.send_keys(absolutePath)
