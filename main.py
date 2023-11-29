@@ -67,4 +67,4 @@ bot.open()
 bot.login()
 time.sleep(2)
 
-bot.completeProfile( f'{os.getcwd()}/data/images/profile0.jpg', [f'{os.getcwd()}/data/images/profile0.jpg'])
+bot.completeProfile( profilePic='{os.getcwd()}/data/images/profile0.jpg', imagesPaths=[f'{os.getcwd()}/data/images/profile0.jpg'])
