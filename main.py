@@ -1,4 +1,4 @@
-import time
+import time, os
 
 from data.shallowIGAccs import mockUsernames
 from utils_acc_c import isAccUsable, downloadDataForNewIg, replaceNewInfoInIG,\
@@ -67,4 +67,4 @@ bot.open()
 bot.login()
 time.sleep(2)
 
-bot.completeProfile('Kaplloni', 'kaplloniihasonit1', 'Kaplllsdasd', '{os.getcwd()}/data/images/profile0.jpg')
+bot.completeProfile( f'{os.getcwd()}/data/images/profile0.jpg', [f'{os.getcwd()}/data/images/profile0.jpg'])
