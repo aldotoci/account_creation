@@ -7,7 +7,7 @@ from utils import convertFileLinesIntoArray
 from config import db
 from ANDROID_IG_AC_BOT import IG_Bot
 
-ig_bot = IG_Bot
+ig_bot = IG_Bot()
 
 def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tableToStore: str):
     for i, user in enumerate(shallow_ig_acc_data):
