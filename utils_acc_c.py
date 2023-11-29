@@ -89,11 +89,13 @@ def replaceNewInfoInIG(bot,data_to_use, usernameToReplace):
             bot.completeProfile(usersData['fullname'], usernameToReplace, usersData['bio'], profileAbsolutePath ,postsAbsolutePath)
         except Exception as e:
             print('Err at replaceNewInfoInIG, 93', e)
+            bot.close()
             return False
 
         cookies = bot.getInfoForCurrentSession()
     except Exception as e:
         print('Err at replaceNewInfoInIG, 71', e)
+        bot.close()
         return False
     bot.close()
     return cookies
