@@ -16,9 +16,6 @@ def isAccUsable(username, password, cookies=None):
         bot.login()
         time.sleep(5)
 
-    if not bot.isAccountLoggedOut():
-        return bot
-
     try:
         if(bot.isAccountIsSusspended()):
             bot.close()
@@ -26,6 +23,9 @@ def isAccUsable(username, password, cookies=None):
     except:
         bot.close()
         return False
+
+    if not bot.isAccountLoggedOut():
+        return bot
 
     bot.close()
     return False
