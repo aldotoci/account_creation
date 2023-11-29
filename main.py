@@ -6,6 +6,7 @@ from utils_acc_c import isAccUsable, downloadDataForNewIg, replaceNewInfoInIG,\
 from utils import convertFileLinesIntoArray
 from config import db
 from ANDROID_IG_AC_BOT import IG_Bot
+from instabot import Bot
 
 ig_bot = IG_Bot()
 
@@ -57,4 +58,13 @@ gender = 'rapper'
 usernamesToStartIndex = config["fastRappersToGetInfoStartI"]
 shallow_ig_acc_data = mockUsernames[config["mockIgAccToStartI"]:]
 
-main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newlyCreatingAcc)
+# main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newlyCreatingAcc)
+
+user = shallow_ig_acc_data[0]
+bot = Bot(username=user['username'], password=user['password'])
+
+bot.open()
+bot.login()
+time.sleep(2)
+
+bot.completeProfile('Kaplloni', 'kaplloniihasonit1', 'Kaplllsdasd', '{os.getcwd()}/data/images/profile0.jpg')
