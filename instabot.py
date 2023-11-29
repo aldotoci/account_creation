@@ -107,6 +107,8 @@ class Bot:
 
         self.cookies = self.getInfoForCurrentSession()
 
+        self.notNowNotifications()
+
     def isAccountLoggedOut(self):
         cookies = self.getInfoForCurrentSession()
 
@@ -225,6 +227,7 @@ class Bot:
             # _a9_1
             notNowNotification.click()
             time.sleep(2)
+            print('nn worked')
         except Exception as e:
             pass
 
