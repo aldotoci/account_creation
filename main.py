@@ -56,6 +56,7 @@ def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tab
         time.sleep(5)
 
         ig_bot.reset_ip()
+        time.sleep(10)
 
 rappersToGetInfo = convertFileLinesIntoArray('./data/ComigIGCreation/rappers')
 boysToGetInfo = convertFileLinesIntoArray('./data/ComigIGCreation/males')
