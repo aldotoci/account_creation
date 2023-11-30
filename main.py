@@ -11,6 +11,7 @@ from instabot import Bot
 ig_bot = IG_Bot()
 
 def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tableToStore: str):
+    print('shallow_ig_acc_data', len(shallow_ig_acc_data))
     for i, user in enumerate(shallow_ig_acc_data):
         print('i', i)
 
