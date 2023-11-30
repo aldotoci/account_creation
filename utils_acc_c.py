@@ -41,6 +41,7 @@ def downloadPhotos(urls, imageNum):
 
 
 def downloadDataForNewIg(username_to_profile_info, username_to_get_images, profileNum):
+    print('username_to_profile_info, username_to_get_images', username_to_profile_info, username_to_get_images)
     try:
         usersData = extractDataFromUserForAccCreation(username_to_get_images)
     except Exception as err:
