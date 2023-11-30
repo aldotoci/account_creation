@@ -22,13 +22,15 @@ def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tab
 
         username, password = user['username'], user['password']
 
-        bot = isAccUsable(username, password)
-        if bot == False: continue
-
         username_to_profile_info = real_usernames[i]
         username_to_get_images = real_usernames[i+1]
 
         data_to_use = downloadDataForNewIg(username_to_get_images, username_to_profile_info, 1)
+
+        bot = isAccUsable(username, password)
+        if bot == False: continue
+
+
         while data_to_use == 0 or data_to_use == 1:
             if data_to_use == 0:
                 u_to_remove = username_to_get_images
