@@ -541,6 +541,7 @@ class Bot:
 
         if (fullName != None or username != None or bio != None):
             self.driver.get('https://www.instagram.com/accounts/edit/')
+            time.sleep(5)
             try:
                 self.waitForElementXPATH('//span[contains(text(), "See more in Accounts")]')
                 self.editProfileInfoMetaWay(fullName, username, bio)
