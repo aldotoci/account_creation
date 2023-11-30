@@ -12,6 +12,7 @@ ig_bot = IG_Bot()
 
 def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tableToStore: str):
     print('shallow_ig_acc_data', len(shallow_ig_acc_data))
+    rui = 0
     for i, user in enumerate(shallow_ig_acc_data):
         print('i', i)
 
@@ -22,8 +23,8 @@ def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tab
 
         username, password = user['username'], user['password']
 
-        username_to_profile_info = real_usernames[i]
-        username_to_get_images = real_usernames[i+1]
+        username_to_profile_info = real_usernames[rui+i]
+        username_to_get_images = real_usernames[rui+i+1]
 
         data_to_use = downloadDataForNewIg(username_to_get_images, username_to_profile_info, 1)
         while data_to_use == 0 or data_to_use == 1:
@@ -31,12 +32,13 @@ def main(shallow_ig_acc_data: list[dict], real_usernames: list ,gender: str, tab
                 u_to_remove = username_to_get_images
             else:
                 u_to_remove = username_to_profile_info
+            rui+=1
 
             print(u_to_remove, 'sth with this account')
             real_usernames.pop(real_usernames.index(u_to_remove))
 
-            username_to_profile_info = real_usernames[i]
-            username_to_get_images = real_usernames[i + 1]
+            username_to_profile_info = real_usernames[rui+i]
+            username_to_get_images = real_usernames[rui+i + 1]
             data_to_use = downloadDataForNewIg(username_to_get_images, username_to_profile_info, 1)
 
 
