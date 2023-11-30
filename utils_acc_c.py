@@ -43,14 +43,16 @@ def downloadPhotos(urls, imageNum):
 def downloadDataForNewIg(username_to_profile_info, username_to_get_images, profileNum):
     try:
         usersData = extractDataFromUserForAccCreation(username_to_get_images)
-    except:
+    except Exception as err:
+        print('err', err)
         return 0
     try:
         profile_info = getUsernameBasicInfo(username_to_profile_info)
         usersData['fullname'] = profile_info['fullname']
         usersData['bio'] = profile_info['fullname']
         usersData['username'] = profile_info['username']
-    except:
+    except Exception as err:
+        print('err', err)
         return 1
 
     postsAbsolutePath = downloadPhotos(usersData['postsPicUrls'], profileNum)
