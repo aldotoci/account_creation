@@ -70,11 +70,11 @@ gender = 'rapper'
 usernamesToStartIndex = config["fastRappersToGetInfoStartI"]
 shallow_ig_acc_data = mockUsernames[config["mockIgAccToStartI"]:]
 
-# main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newfastigs)
+main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newfastigs)
 
-fU = suspendedUsernames([u['username'] for u in shallow_ig_acc_data], Not=True)
-fU = [u for u in shallow_ig_acc_data if u['username'] in fU]
-open('./data/userpassF.txt', 'a').write('\n'.join([f'{u["username"]}:{u["password"]}:' for u in fU]))
+# fU = suspendedUsernames([u['username'] for u in shallow_ig_acc_data], Not=True)
+# fU = [u for u in shallow_ig_acc_data if u['username'] in fU]
+# open('./data/userpassF.txt', 'a').write('\n'.join([f'{u["username"]}:{u["password"]}:' for u in fU]))
 
 # user = shallow_ig_acc_data[0]
 # bot = Bot(username=user['username'], password=user['password'])
