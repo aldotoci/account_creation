@@ -70,7 +70,7 @@ gender = 'rapper'
 usernamesToStartIndex = config["fastRappersToGetInfoStartI"]
 shallow_ig_acc_data = mockUsernames[config["mockIgAccToStartI"]:]
 
-main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newlyCreatingAcc)
+main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newfastigs)
 
 # fU = suspendedUsernames([u['username'] for u in shallow_ig_acc_data], Not=True)
 # fU = [u for u in shallow_ig_acc_data if u['username'] in fU]
