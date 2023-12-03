@@ -178,6 +178,19 @@ def isIGUsernameAvailable(username, partToNotChange=""):
     if 'username' in errors:
         return False
     return True
+
+def suspendedUsernames(usernames):
+    susU = []
+
+    for i, username in enumerate(usernames):
+        print('i', i)
+        if(checkIfUsernameIsSuspended(username)):
+            print(username)
+            susU.append(username)
+
+    return susU
+
+
 # def generateSimilarIGUsername(username, partToNotChange=""):
 #     username = username.replace(" ", "").lower()
 #     username = username[::-1]
@@ -445,13 +458,18 @@ def generateRandomNumAlphabet(length):
 
     return random_string
 
-def suspendedUsernames(usernames):
+def suspendedUsernames(usernames, Not=False):
     susU = []
 
     for i, username in enumerate(usernames):
         print('i', i)
-        if(checkIfUsernameIsSuspended(username)):
-            print(username)
-            susU.append(username)
+        if(Not==False):
+            if(checkIfUsernameIsSuspended(username)):
+                print(username)
+                susU.append(username)
+        else:
+            if(not checkIfUsernameIsSuspended(username)):
+                print(username)
+                susU.append(username)
 
     return susU
