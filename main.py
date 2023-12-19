@@ -68,13 +68,15 @@ girlsToGetInfo = convertFileLinesIntoArray('./data/ComigIGCreation/females')
 config = db.config.find_one({"name": "completeIGProfile"})
 gender = 'rapper'
 usernamesToStartIndex = config["fastRappersToGetInfoStartI"]
-shallow_ig_acc_data = mockUsernames[config["mockIgAccToStartI"]:]
+# shallow_ig_acc_data = mockUsernames[config["mockIgAccToStartI"]:]
 
-main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newfastigs)
+# main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.newfastigs)
 
-# fU = suspendedUsernames([u['username'] for u in shallow_ig_acc_data], Not=True)
-# fU = [u for u in shallow_ig_acc_data if u['username'] in fU]
-# open('./data/userpassF.txt', 'a').write('\n'.join([f'{u["username"]}:{u["password"]}:' for u in fU]))
+# fU = suspendedUsernames([u['username'] for u in mockUsernames], Not=True)
+fU = ['chrisinntatiehg35', 'gaatok8', 'studfinnpetasani37', 'depsushitsuducfx2023', 'uncondeoloy5k17', 'lapakates1', 'earatkoriso563', 'berhotsfushidriv7x45', 'zhioyu2', 'chrisinntatiehg35','iztreattakureowp71','didismizumbolux','proninpunex8o653','erpaupitsuminsbo72','dyspwormbojies847','menscoatsuviatg3','burrmopijicaebl54','tuifibakudianq8','maoshmineh2','sitiradabes7d43','paokamteaz7','haitrifgishimil574','sorebashibaij484','nighgingheielre5','lenohdaan32','siseno596','buddezeibrem3y4','peuswirmuchivi23','exonkukiole7','receldorisleevz79','lyidepdelb49','outalseruriasm8','meilazzokurand15','provcompiighetd35','terspopenlock8489','greatenburecon6d','moadayurp8','igsinosubreakd23','shaguz54','faucitaetran6m25','naatsezrl46','klastiominidis6w61','raibetnaiglugwy1','towetttsuoscor4z2023','sourrefourplocbi','holvaimakukiddpd1','chensbrokiripat252023','nuposthundfudrent3','ashleyisglucria74','tgegadwariqui203','neaukowneyagroww72023','alolwokarer29','kaohopansh22','lgenanmekuworkf796','perccernanipromg2','miapaniosp2023','gestyeruunvp2','alyjnyaspirhk46','adgefpakube4h24','gadowoyaglazfv88','rosatchiyapo8y7']
+
+fU = [u for u in mockUsernames if u['username'] not in fU]
+open('./data/userpassF.txt', 'a').write('\n'.join([f'{u["username"]}:{u["password"]}:' for u in fU]))
 
 # user = shallow_ig_acc_data[0]
 # bot = Bot(username=user['username'], password=user['password'])
@@ -82,5 +84,3 @@ main(shallow_ig_acc_data, rappersToGetInfo[usernamesToStartIndex:], gender, db.n
 # bot.open()
 # bot.login()
 # time.sleep(2)
-
-# bot.completeProfile(imagesPaths=[f'{os.getcwd()}/data/images/profile0.png'])

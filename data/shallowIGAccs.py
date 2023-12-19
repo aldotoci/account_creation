@@ -4,7 +4,7 @@
 
 
 mockUsernames = []
-rowData = open('./data/userspass.txt').readlines()
+rowData = open('./data/userspass1.txt').readlines()
 rowData[-1] += "\n"
 currentDT = 0
 

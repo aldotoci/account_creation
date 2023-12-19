@@ -31,20 +31,21 @@ class IG_Bot:
         return self.d.xpath(xpath_expression)
 
     def openInstagram(self, relative_name='Instagram'):
-        IGIcon = self.d.xpath(f'//android.widget.TextView[@text="{relative_name}"]')
-
-        try:
-            IGIcon = IGIcon.get_last_match()
-        except:
-            pass
-
-        IGIcon.click()
-        time.sleep(2)
-
-        # Click ok button
-        isOkButton = self.d.xpath(f'//*[contains(@text, "OK")]').wait(1)
-        if (isOkButton):
-            self.d.xpath(f'//*[contains(@text, "OK")]').click()
+        # IGIcon = self.d.xpath(f'//android.widget.TextView[@text="{relative_name}"]')
+        #
+        # try:
+        #     IGIcon = IGIcon.get_last_match()
+        # except:
+        #     pass
+        #
+        # IGIcon.click()
+        # time.sleep(2)
+        #
+        # # Click ok button
+        # isOkButton = self.d.xpath(f'//*[contains(@text, "OK")]').wait(1)
+        # if (isOkButton):
+        #     self.d.xpath(f'//*[contains(@text, "OK")]').click()
+        self.open_app('com.instagram.android/.activity.MainTabActivity')
 
 
     def login(self, u=None, p=None) -> None:
@@ -147,23 +148,21 @@ class IG_Bot:
             self.d.xpath(f'//*[contains(@text, "OK")]').click()
 
     def openEditProfile(self):
-        self.goToProfile()
-        time.sleep(1)
-
-        # Clicks the "Edit Profile" button
-        self.d(resourceId=f"com.instagram.{self.package_ext}:id/button_text", text='Edit profile').wait(3)
-
-        editProfileButt = self.d(resourceId=f"com.instagram.{self.package_ext}:id/button_text", text='Edit profile')
+        editProfileButt = self.d(description='Edit profile')
         editProfileButt.click()
 
-    def editProfile(self, bio: str = None, external_url: str = None, external_title: str = None):
+    def editProfile(self, username: str = None,name: str = None ,bio: str = None, external_url: str = None, external_title: str = None, profile_pic_absoulute_path: str = None):
         self.openEditProfile()
+
+        time.sleep(1)
 
         # Click not now
         self.clickNotNowAvatar()
 
-        if bio != None:
-            bioButton = self.d(text="Bio", resourceId=f"com.instagram.{self.package_ext}:id/form_field_label_inline")
+        time.sleep(1)
+
+        if bio:
+            bioButton = self.d(resourceId=f"com.instagram.android:id/bio")
             bioButton.click()
 
             # Edit text
@@ -176,7 +175,49 @@ class IG_Bot:
             okeyButton.click()
             time.sleep(1)
 
-        if external_url != None and external_title != None:
+        time.sleep(2)
+
+        if name:
+            bioButton = self.d(resourceId="com.instagram.android:id/full_name")
+            bioButton.click()
+
+            # Edit text
+            bioEditText = self.d(className="android.widget.EditText")
+            bioEditText.set_text(name)
+            time.sleep(2)
+
+            # Edit Clicking okay icon
+            okeyButton = self.d(resourceId=f"com.instagram.{self.package_ext}:id/action_bar_button_action")
+            okeyButton.click()
+            time.sleep(1)
+
+            time.sleep(1)
+            try:
+                changeName = self.d(text="Change name").wait(2)
+                if(changeName):
+                    self.d(text="Change name").click()
+                    time.sleep(1)
+            except Exception as err:
+                print('err', err)
+        time.sleep(3)
+
+        if username:
+            bioButton = self.d(resourceId="com.instagram.android:id/username")
+            bioButton.click()
+
+            # Edit text
+            bioEditText = self.d(className="android.widget.EditText")
+            bioEditText.set_text(username)
+            time.sleep(2)
+
+            # Edit Clicking okay icon
+            okeyButton = self.d(resourceId=f"com.instagram.{self.package_ext}:id/action_bar_button_action")
+            okeyButton.click()
+            time.sleep(3)
+
+        time.sleep(5)
+
+        if external_url and external_title:
             # Clicks add link
             addLinkButton = self.d(text="Add link",
                                    resourceId=f"com.instagram.{self.package_ext}:id/igds_textcell_title")
@@ -198,6 +239,16 @@ class IG_Bot:
             # Edit Clicking okay icon
             okeyButton = self.d(resourceId=f"com.instagram.{self.package_ext}:id/action_bar_button_action")
             okeyButton.click()
+
+        if profile_pic_absoulute_path: self.upload_profile_pic(profile_pic_absoulute_path)
+
+        # Edit Clicking okay icon
+        try:
+            okeyButton = self.d(resourceId=f"com.instagram.{self.package_ext}:id/action_bar_button_action")
+            okeyButton.click()
+            time.sleep(3)
+        except Exception as err:
+            print('Err at saving profile' , err)
 
         time.sleep(3)
         self.goBackButton()
@@ -221,7 +272,7 @@ class IG_Bot:
         self.goToHomeTab()
 
     def goToProfile(self):
-        self.d(resourceId='com.instagram.androie:id/profile_tab').click()
+        self.d(resourceId='com.instagram.android:id/profile_tab').click()
 
     def goThroughExplorer(self):
         self.refreshSearchTab()
@@ -364,7 +415,7 @@ class IG_Bot:
 
     def clickNotNowAvatar(self):
         try:
-            exists = self.d(text="Not now").wait(0.5)
+            exists = self.d(text="Not now").wait(1)
             print('exists', exists)
             if (exists):
                 notNowButton = self.d(text="Not now")
@@ -400,21 +451,20 @@ class IG_Bot:
         #
         pass
 
-    def removeOpenedApps(self):
+    def removeOpenedApps(self, text="Close all"):
         # Open the recent apps screen
         self.d.press("recent")
 
         time.sleep(2)
 
         try:
-            butt = self.d(text="Close all").wait(1)
+            butt = self.d(text=text).wait(1)
             if (butt):
-                self.d(text="Close all").click()
+                self.d(text=text).click()
         except:
             pass
 
-        # Press the home button again to return to the home screen
-        self.d.press("home")
+        time.sleep(1)
 
     def isAccountSuspended(self):
         isSus = self.d.xpath(f'//*[contains(@text, "We suspended your account,")]').wait(1)
@@ -471,7 +521,7 @@ class IG_Bot:
 
             self.goToProfile()
 
-            drop_down_icon = self.d(resourceId='com.instagram.androie:id/action_bar_little_icon_container')
+            drop_down_icon = self.d(resourceId='com.instagram.android:id/action_bar_little_icon_container')
             drop_down_icon.click()
 
             # Swipe till add account
@@ -709,7 +759,7 @@ class IG_Bot:
 
             time.sleep(3)
 
-            drop_down_icon = self.d(resourceId='com.instagram.androie:id/action_bar_little_icon_container')
+            drop_down_icon = self.d(resourceId='com.instagram.android:id/action_bar_little_icon_container')
             drop_down_icon.click()
 
             # Swipe till add account
@@ -1267,9 +1317,375 @@ class IG_Bot:
 
         time.sleep(10)
 
+    def clickExtiIgnoreButton(self):
+        try:
+            exitIgnore = self.d(description='Dismiss').wait(3)
+            if exitIgnore:
+                self.d(description='Dismiss').click()
+        except Exception as err:
+            print('err', err)
 
 
+    def upload_meadia_from_pc_to_android(self, pc_path):
+        os.system(f'adb push {pc_path} /mnt/shared/Pictures')
+        #/mnt/shared/Pictures
+        #/storage/emulated/0/DCIM
+        #/data/apic/
 
+    def open_app(self, package_name):
+        os.system(f'adb shell am start {package_name}')
+
+    def open_and_share_img(self):
+        self.removeOpenedApps(text='CLEAR ALL')
+        time.sleep(1)
+
+        self.d(text="Gallery").click()
+        time.sleep(1)
+        self.removeOpenedApps(text='CLEAR ALL')
+        time.sleep(1)
+
+        self.openInstagram()
+        time.sleep(2)
+
+        self.d(resourceId='com.instagram.android:id/creation_tab').click()
+        time.sleep(1)
+
+        try:
+            ex = self.d(text="ALLOW").wait(1)
+            if(ex):
+                self.d(text="ALLOW").click()
+        except Exception as err:
+            print('err', err)
+
+        try:
+            ex = self.d(text="ALLOW").wait(1)
+            if (ex):
+                self.d(text="ALLOW").click()
+        except Exception as err:
+            print('err', err)
+
+        # xpath_expression = f'//*[contains(@content-desc, "Photo thumbnail")]'
+        # image_photos = self.d(descriptionContains='Photo thumbnail')
+        # image_photos[1].click()
+
+        time.sleep(1)
+
+        self.d(description="Next").click()
+
+        time.sleep(2)
+
+        self.d(description="Next").click()
+        time.sleep(1)
+
+        try:
+            ex = self.d(text="OK").wait(1)
+            if(ex):
+                self.d(text="OK").click()
+        except Exception as err:
+            print('err', err)
+
+        time.sleep(1)
+
+        try:
+            ex = self.d(text="Share").wait(1)
+            if(ex):
+                self.d(text="Share").click()
+        except Exception as err:
+            print('err', err)
+
+        time.sleep(20)
+
+        self.removeOpenedApps('CLEAR ALL')
+        time.sleep(1)
+        self.openInstagram()
+
+    def upload_profile_pic(self, profile_pic_absoulute_path):
+        try:
+            os.system('adb shell "rm /storage/emulated/0/Pictures/Instagram/*"')
+        except:
+            pass
+        try:
+            os.system('adb shell "rm /mnt/shared/Pictures/Instagram/*"')
+        except:
+            pass
+        try:
+            os.system('adb shell "rm /mnt/shared/Pictures/*"')
+        except:
+            pass
+        self.upload_meadia_from_pc_to_android(rf'{profile_pic_absoulute_path}')
+        time.sleep(1)
+        try:
+            os.system('adb shell pm clear com.android.providers.media')
+        except:
+            pass
+
+        time.sleep(1)
+
+        self.removeOpenedApps('CLEAR ALL')
+        time.sleep(1)
+
+        self.d(text='Gallery').click(1)
+        time.sleep(1)
+
+        self.openInstagram()
+        time.sleep(2)
+
+        self.goToProfile()
+        time.sleep(2)
+
+        self.openEditProfile()
+
+        time.sleep(2)
+
+        # Click not now
+        self.clickNotNowAvatar()
+
+        time.sleep(1)
+
+        self.d(text="Edit picture or avatar").click()
+        time.sleep(1)
+
+        self.d(text="New profile picture").click()
+        time.sleep(1)
+
+        try:
+            allow = self.d(text="ALLOW").wait(1)
+            if(allow):
+                self.d(text="ALLOW").click()
+        except Exception as err:
+            print('err', err)
+
+        time.sleep(1)
+
+        # image_photos = self.d(descriptionContains='Photo thumbnail')
+        # image_photos[1].click()
+
+        self.d(text="Next").click()
+
+        time.sleep(1)
+
+        try:
+            allow = self.d(text="Next").wait(1)
+            if(allow):
+                self.d(text="Next").click()
+        except Exception as err:
+            print('err', err)
+
+        time.sleep(1)
+
+        try:
+            allow = self.d(text="Share").wait(1)
+            if(allow):
+                self.d(text="Share").click()
+        except Exception as err:
+            print('err', err)
+
+        time.sleep(10)
+
+    def complete_profile(self, username, password, fullname, username_to_replace, bio, profileAbsolutePath, postsAbsolutePath):
+        self.go_android_home()
+
+        self.openInstagram()
+
+        self.login(username, password)
+
+        time.sleep(10)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(1)
+
+        self.openInstagram()
+
+        time.sleep(2)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(2)
+
+        self.openInstagram()
+
+        time.sleep(2)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(2)
+
+        self.openInstagram()
+
+        time.sleep(5)
+
+        self.goToProfile()
+
+        time.sleep(2)
+
+        self.clickExtiIgnoreButton()
+
+        time.sleep(1)
+
+        self.editProfile(username=username_to_replace, name=fullname, bio=bio)
+
+        time.sleep(1)
+
+        self.removeOpenedApps('CLEAR ALL')
+        time.sleep(1)
+        self.openInstagram()
+        time.sleep(2)
+
+        self.goToProfile()
+        time.sleep(1)
+        self.editProfile(profile_pic_absoulute_path=profileAbsolutePath)
+
+
+        self.removeOpenedApps('CLEAR ALL')
+        self.openInstagram()
+        for img_paths in postsAbsolutePath:
+            try:
+                self.upload_meadia_from_pc_to_android(rf'{img_paths}')
+                time.sleep(1)
+                self.open_and_share_img()
+                time.sleep(1)
+            except Exception as err:
+                print('err while upload img in ig', err)
+
+    def replace_usernames_android(self, username, password, username_to_replace, full_name, bio):
+        self.go_android_home()
+
+        self.openInstagram()
+
+        self.login(username, password)
+
+        time.sleep(10)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(1)
+
+        self.openInstagram()
+
+        time.sleep(2)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(2)
+
+        self.openInstagram()
+
+        time.sleep(2)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(2)
+
+        self.openInstagram()
+
+        time.sleep(5)
+
+        self.goToProfile()
+
+        time.sleep(2)
+
+        self.clickExtiIgnoreButton()
+
+        time.sleep(1)
+
+        self.editProfile(username=username_to_replace, name=full_name, bio=bio)
+
+        time.sleep(1)
+
+    def upload_images(self, username, password, profileAbsolutePath, postsAbsolutePath):
+        self.go_android_home()
+
+        self.openInstagram()
+
+        self.login(username, password)
+
+        time.sleep(10)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(1)
+
+        self.openInstagram()
+
+        time.sleep(2)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(2)
+
+        self.openInstagram()
+
+        time.sleep(2)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(2)
+
+        self.openInstagram()
+
+        time.sleep(2)
+
+        self.goToProfile()
+        time.sleep(1)
+        self.editProfile(profile_pic_absoulute_path=profileAbsolutePath)
+
+        self.removeOpenedApps('CLEAR ALL')
+        self.openInstagram()
+        for img_paths in postsAbsolutePath:
+            try:
+                try:
+                    os.system('adb shell "rm /storage/emulated/0/Pictures/Instagram/*"')
+                except: pass
+                try:
+                    os.system('adb shell "rm /mnt/shared/Pictures/Instagram/*"')
+                except: pass
+                try:
+                    os.system('adb shell "rm /mnt/shared/Pictures/*"')
+                except: pass
+                self.upload_meadia_from_pc_to_android(rf'{img_paths}')
+                time.sleep(1)
+                try:
+                    os.system('adb shell pm clear com.android.providers.media')
+                except: pass
+                time.sleep(3)
+                self.open_and_share_img()
+                time.sleep(1)
+            except Exception as err:
+                print('err while upload img in ig', err)
+
+    def make_user_private(self, username, password):
+        self.go_android_home()
+
+        self.openInstagram()
+
+        self.login(username, password)
+
+        time.sleep(10)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(1)
+
+        self.openInstagram()
+
+        time.sleep(2)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(2)
+
+        self.openInstagram()
+
+        time.sleep(2)
+
+        self.removeOpenedApps('CLEAR ALL')
+
+        time.sleep(2)
+
+        self.openInstagram()
+
+        time.sleep(2)
 
 
 
